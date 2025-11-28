@@ -1,5 +1,4 @@
-SELECT
-  SUM(status='present') AS present_count,
-  COUNT(*) AS total_marked
-FROM attendance
-WHERE student_id = :student_id;
+<?php
+require_once __DIR__ . '/../../includes/config.php';
+require_role('student');
+echo "STUDENT DASHBOARD - Logged in as " . e($_SESSION['user']['name']);

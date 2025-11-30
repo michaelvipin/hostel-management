@@ -1,13 +1,11 @@
 <?php
-// includes/config.php
-// Permanent, robust base URL + helpers + DB connection
-
-// start session
+// includes/config.php  (safe, minimal, memory-friendly)
+// Start session
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// ---------- DB config (change for prod) ----------
+// ---------- DB config ----------
 define('DB_HOST', '127.0.0.1');
 define('DB_NAME', 'hostel_db');
 define('DB_USER', 'root');
@@ -26,65 +24,37 @@ try {
         $options
     );
 } catch (PDOException $ex) {
-    // in dev show message; in prod log & show generic error.
+    // dev: show error
     die("DB connection failed: " . $ex->getMessage());
 }
 
-// ---------- BASE_URL auto-detection (robust) ----------
-// Goal: compute the URL path to the project root, e.g. "/hostel-management" or "" if in webroot.
+// ---------- BASE_URL detection (very simple and robust) ----------
+$docRoot = realpath($_SERVER['DOCUMENT_ROOT'] ?? '');
+$projectRoot = realpath(__DIR__ . '/..'); // includes/ is inside project
+$baseUrl = '';
 
-// SCRIPT_NAME example: /hostel-management/public/login.php
-$scriptName = $_SERVER['SCRIPT_NAME'] ?? '/';
-$scriptDir  = rtrim(dirname($scriptName), '/\\'); // e.g. /hostel-management/public
-
-// If your public files are inside a folder named "public", treat project root as parent of public
-if (preg_match('#/public$#', $scriptDir)) {
-    $projectRoot = dirname($scriptDir); // remove /public
-} else {
-    // fallback: assume project root is the parent directory of current script directory
-    // This handles cases like direct access or virtual hosts.
-    $projectRoot = dirname($scriptDir);
+if ($docRoot !== false && $projectRoot !== false) {
+    // convert backslashes to slashes then remove docRoot part
+    $docRoot = str_replace('\\', '/', $docRoot);
+    $projectRoot = str_replace('\\', '/', $projectRoot);
+    if (strpos($projectRoot, $docRoot) === 0) {
+        $baseUrl = substr($projectRoot, strlen($docRoot));
+        $baseUrl = rtrim(str_replace('\\', '/', $baseUrl), '/');
+    }
 }
+define('BASE_URL', $baseUrl === '' ? '' : $baseUrl); // e.g. "/hostel-management" or ""
 
-// Normalize: if projectRoot ends up as '/' or '.' -> set to empty string
-$projectRoot = $projectRoot === '/' || $projectRoot === '.' ? '' : rtrim($projectRoot, '/\\');
-define('BASE_URL', $projectRoot); // Example: '/hostel-management' or ''
-
-// ---------- URL helpers ----------
-/**
- * base_url() - returns BASE_URL (string)
- */
-function base_url() {
-    return BASE_URL;
-}
-
-/**
- * url($path) - build a URL relative to project root.
- * Examples:
- *   url('public/login.php') -> '/hostel-management/public/login.php'
- *   url('/admin/dashboard.php') -> '/hostel-management/admin/dashboard.php'
- */
+// ---------- helpers ----------
 function url($path = '') {
-    $base = BASE_URL;
-    // clean path
-    $path = (string)$path;
-    if ($path === '') return $base ?: '/';
-    // allow both relative and absolute incoming paths
-    $path = '/' . ltrim($path, '/');
-    return ($base === '' ? '' : $base) . $path;
+    $path = ($path === '' ? '' : '/' . ltrim($path, '/'));
+    return (BASE_URL === '' ? '' : BASE_URL) . $path;
 }
-
-/**
- * redirect($path) - send Location header and exit
- * Accepts same $path as url().
- */
 function redirect($path = '') {
-    // no output must be sent before calling this
     header('Location: ' . url($path));
     exit;
 }
 
-// ---------- Authentication / role helpers ----------
+// ---------- auth helpers ----------
 function current_user() {
     return $_SESSION['user'] ?? null;
 }
@@ -101,29 +71,31 @@ function require_role($role) {
         redirect('public/login.php');
     }
     if (($_SESSION['user']['role'] ?? '') !== $role) {
-        // prefer clear 403 with options rather than bouncing to login
         http_response_code(403);
-        echo '<!doctype html><html><head><meta charset="utf-8"><title>403 - Access denied</title></head><body>';
         echo '<h1>403 — Access denied</h1>';
-        echo '<p>You are logged in as <strong>' . e($_SESSION['user']['role']) . '</strong> and do not have permission to view this page.</p>';
-        echo '<p><a href="' . e(url($_SESSION['user']['role'] . '/dashboard.php')) . '">Go to your dashboard</a> or <a href="' . e(url('public/logout.php')) . '">Logout</a></p>';
-        echo '</body></html>';
+        echo '<p>You are logged in as <strong>' . htmlspecialchars($_SESSION['user']['role'] ?? '', ENT_QUOTES, 'UTF-8') . '</strong>.</p>';
+        echo '<p><a href="' . htmlspecialchars(url(($_SESSION['user']['role'] ?? '') . '/dashboard.php'), ENT_QUOTES, 'UTF-8') . '">Go to your dashboard</a> or <a href="' . htmlspecialchars(url('public/logout.php'), ENT_QUOTES, 'UTF-8') . '">Logout</a></p>';
         exit;
     }
 }
 function require_any_role(array $roles) {
-    if (!is_logged_in()) {
-        redirect('public/login.php');
-    }
-    if (!in_array($_SESSION['user']['role'], $roles)) {
+    if (!is_logged_in()) redirect('public/login.php');
+    if (!in_array($_SESSION['user']['role'] ?? '', $roles)) {
         http_response_code(403);
-        echo '<!doctype html><html><head><meta charset="utf-8"><title>403 - Access denied</title></head><body>';
         echo '<h1>403 — Access denied</h1>';
-        echo '<p>You are logged in as <strong>' . e($_SESSION['user']['role']) . '</strong> and do not have permission to view this page.</p>';
-        echo '<p><a href="' . e(url($_SESSION['user']['role'] . '/dashboard.php')) . '">Go to your dashboard</a> or <a href="' . e(url('public/logout.php')) . '">Logout</a></p>';
-        echo '</body></html>';
         exit;
     }
+}
+
+// ---------- session setter ----------
+function set_user_session(array $user) {
+    $_SESSION['user'] = [
+        'id'    => (int)($user['id'] ?? 0),
+        'name'  => $user['name'] ?? '',
+        'email' => $user['email'] ?? '',
+        'role'  => $user['role'] ?? 'student'
+    ];
+    session_regenerate_id(true);
 }
 
 // ---------- CSRF helpers ----------
@@ -146,7 +118,7 @@ function verify_csrf() {
     }
 }
 
-// ---------- Output escape ----------
+// ---------- HTML escape ----------
 function e($str) {
     return htmlspecialchars($str ?? '', ENT_QUOTES, 'UTF-8');
 }

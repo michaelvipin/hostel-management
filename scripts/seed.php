@@ -34,4 +34,4 @@ echo "Seed complete. Inserted: {$inserted} user(s).<br>";
 echo "Admin: admin@hostel.local / Admin@123<br>";
 echo "Warden: warden1@hostel.local / Warden@123<br>";
 echo "Students: studentA@hostel.local, studentB@hostel.local (password: Student@123)<br>";
-echo "<a href='/login.php'>Go to login</a>";
+echo "<a href='public/login.php'>Go to login</a>";

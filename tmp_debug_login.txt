@@ -508,3 +508,112 @@
 )
 
 [2025-11-30T16:53:28+01:00] Redirecting to role dashboard: admin/dashboard.php
+[2025-12-01T16:15:42+01:00] REQUEST GET URL=/hostel-management/public/login.php
+[2025-12-01T16:15:42+01:00] SESSION BEFORE: 
+[2025-12-01T16:15:42+01:00] GET - serving login form. Session user: 
+[2025-12-01T16:15:54+01:00] REQUEST POST URL=/hostel-management/public/login.php
+[2025-12-01T16:15:54+01:00] SESSION BEFORE: 
+[2025-12-01T16:15:54+01:00] POST email: studentA@hostel.local
+[2025-12-01T16:15:54+01:00] DB user row: Array
+(
+    [id] => 3
+    [name] => Student A
+    [email] => studentA@hostel.local
+    [password] => $2y$10$K0Au2hjB1GxJm8.IoK0oXuvZWbK.M3lSRMr109yQvJ6GvTT1erViy
+    [role] => student
+)
+
+[2025-12-01T16:15:54+01:00] Cleared previous session user.
+[2025-12-01T16:15:54+01:00] SESSION AFTER SET: Array
+(
+    [id] => 3
+    [name] => Student A
+    [email] => studentA@hostel.local
+    [role] => student
+)
+
+[2025-12-01T16:15:54+01:00] Redirecting to role dashboard: student/dashboard.php
+[2025-12-01T16:19:20+01:00] REQUEST GET URL=/hostel-management/public/login.php
+[2025-12-01T16:19:20+01:00] SESSION BEFORE: 
+[2025-12-01T16:19:20+01:00] GET - serving login form. Session user: 
+[2025-12-01T16:19:30+01:00] REQUEST POST URL=/hostel-management/public/login.php
+[2025-12-01T16:19:30+01:00] SESSION BEFORE: 
+[2025-12-01T16:19:30+01:00] POST email: warden1@hostel.local
+[2025-12-01T16:19:30+01:00] DB user row: Array
+(
+    [id] => 2
+    [name] => Warden One
+    [email] => warden1@hostel.local
+    [password] => $2y$10$h3jNSN7DyqJ3hwGJkTsCjODFZVPkq5W0LKAkT9aZa.A9fvkIqPm46
+    [role] => warden
+)
+
+[2025-12-01T16:19:30+01:00] LOGIN FAILED for warden1@hostel.local
+[2025-12-01T16:19:54+01:00] REQUEST POST URL=/hostel-management/public/login.php
+[2025-12-01T16:19:54+01:00] SESSION BEFORE: 
+[2025-12-01T16:19:54+01:00] POST email: warden1@hostel.local
+[2025-12-01T16:19:54+01:00] DB user row: Array
+(
+    [id] => 2
+    [name] => Warden One
+    [email] => warden1@hostel.local
+    [password] => $2y$10$h3jNSN7DyqJ3hwGJkTsCjODFZVPkq5W0LKAkT9aZa.A9fvkIqPm46
+    [role] => warden
+)
+
+[2025-12-01T16:19:54+01:00] Cleared previous session user.
+[2025-12-01T16:19:54+01:00] SESSION AFTER SET: Array
+(
+    [id] => 2
+    [name] => Warden One
+    [email] => warden1@hostel.local
+    [role] => warden
+)
+
+[2025-12-01T16:19:54+01:00] Redirecting to role dashboard: warden/dashboard.php
+[2025-12-01T16:31:06+01:00] REQUEST GET URL=/hostel-management/public/login.php
+[2025-12-01T16:31:06+01:00] SESSION BEFORE: Array
+(
+    [id] => 2
+    [name] => Warden One
+    [email] => warden1@hostel.local
+    [role] => warden
+)
+
+[2025-12-01T16:31:06+01:00] GET - serving login form. Session user: Array
+(
+    [id] => 2
+    [name] => Warden One
+    [email] => warden1@hostel.local
+    [role] => warden
+)
+
+[2025-12-01T16:31:20+01:00] REQUEST POST URL=/hostel-management/public/login.php
+[2025-12-01T16:31:20+01:00] SESSION BEFORE: Array
+(
+    [id] => 2
+    [name] => Warden One
+    [email] => warden1@hostel.local
+    [role] => warden
+)
+
+[2025-12-01T16:31:20+01:00] POST email: admin@hostel.local
+[2025-12-01T16:31:20+01:00] DB user row: Array
+(
+    [id] => 1
+    [name] => Super Admin
+    [email] => admin@hostel.local
+    [password] => $2y$10$TQSUUO7jdeOQAiPdEu5GD.pS.eAneD5F6rKIlYM7yCOkHU/N/6M3q
+    [role] => admin
+)
+
+[2025-12-01T16:31:20+01:00] Cleared previous session user.
+[2025-12-01T16:31:20+01:00] SESSION AFTER SET: Array
+(
+    [id] => 1
+    [name] => Super Admin
+    [email] => admin@hostel.local
+    [role] => admin
+)
+
+[2025-12-01T16:31:20+01:00] Redirecting to role dashboard: admin/dashboard.php

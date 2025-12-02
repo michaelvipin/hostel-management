@@ -617,3 +617,34 @@
 )
 
 [2025-12-01T16:31:20+01:00] Redirecting to role dashboard: admin/dashboard.php
+[2025-12-01T17:11:37+01:00] REQUEST GET URL=/hostel-management/public/login.php
+[2025-12-01T17:11:37+01:00] SESSION BEFORE: 
+[2025-12-01T17:11:37+01:00] GET - serving login form. Session user: 
+[2025-12-01T17:12:48+01:00] REQUEST GET URL=/hostel-management/public/login.php
+[2025-12-01T17:12:48+01:00] SESSION BEFORE: 
+[2025-12-01T17:12:48+01:00] GET - serving login form. Session user: 
+[2025-12-01T17:13:23+01:00] REQUEST POST URL=/hostel-management/public/login.php
+[2025-12-01T17:13:23+01:00] SESSION BEFORE: 
+[2025-12-01T17:13:23+01:00] POST email: sakthi@gmail.com
+[2025-12-01T17:13:23+01:00] DB user row: Array
+(
+    [id] => 4
+    [name] => Sakthi
+    [email] => sakthi@gmail.com
+    [password] => $2y$10$nXZ80RwUtueCjXM4EiN2F.FpUB7MrboeTVoStOOMJl/X1eKAxWojG
+    [role] => student
+)
+
+[2025-12-01T17:13:23+01:00] Cleared previous session user.
+[2025-12-01T17:13:23+01:00] SESSION AFTER SET: Array
+(
+    [id] => 4
+    [name] => Sakthi
+    [email] => sakthi@gmail.com
+    [role] => student
+)
+
+[2025-12-01T17:13:23+01:00] Redirecting to role dashboard: student/dashboard.php
+[2025-12-01T17:16:27+01:00] REQUEST GET URL=/hostel-management/public/login.php
+[2025-12-01T17:16:27+01:00] SESSION BEFORE: 
+[2025-12-01T17:16:27+01:00] GET - serving login form. Session user: 

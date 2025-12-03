@@ -740,3 +740,53 @@
 )
 
 [2025-12-03T12:34:21+01:00] Redirecting to role dashboard: warden/dashboard.php
+[2025-12-03T12:49:28+01:00] REQUEST GET URL=/hostel-management/public/login.php
+[2025-12-03T12:49:28+01:00] SESSION BEFORE: 
+[2025-12-03T12:49:28+01:00] GET - serving login form. Session user: 
+[2025-12-03T12:49:36+01:00] REQUEST POST URL=/hostel-management/public/login.php
+[2025-12-03T12:49:36+01:00] SESSION BEFORE: 
+[2025-12-03T12:49:36+01:00] POST email: admin@hostel.local
+[2025-12-03T12:49:36+01:00] DB user row: Array
+(
+    [id] => 1
+    [name] => Super Admin
+    [email] => admin@hostel.local
+    [password] => $2y$10$TQSUUO7jdeOQAiPdEu5GD.pS.eAneD5F6rKIlYM7yCOkHU/N/6M3q
+    [role] => admin
+)
+
+[2025-12-03T12:49:36+01:00] Cleared previous session user.
+[2025-12-03T12:49:36+01:00] SESSION AFTER SET: Array
+(
+    [id] => 1
+    [name] => Super Admin
+    [email] => admin@hostel.local
+    [role] => admin
+)
+
+[2025-12-03T12:49:36+01:00] Redirecting to role dashboard: admin/dashboard.php
+[2025-12-03T12:51:06+01:00] REQUEST GET URL=/hostel-management/public/login.php
+[2025-12-03T12:51:06+01:00] SESSION BEFORE: 
+[2025-12-03T12:51:06+01:00] GET - serving login form. Session user: 
+[2025-12-03T12:51:22+01:00] REQUEST POST URL=/hostel-management/public/login.php
+[2025-12-03T12:51:22+01:00] SESSION BEFORE: 
+[2025-12-03T12:51:22+01:00] POST email: xlmvipin@gmail.com
+[2025-12-03T12:51:22+01:00] DB user row: Array
+(
+    [id] => 5
+    [name] => Loyol Michael Vipin
+    [email] => xlmvipin@gmail.com
+    [password] => $2y$10$2WIA1iWUZ8lGwz.j3zu4w.Hiv58rkvhdT315X0mQK6lKGn3V1d9Iy
+    [role] => student
+)
+
+[2025-12-03T12:51:22+01:00] Cleared previous session user.
+[2025-12-03T12:51:22+01:00] SESSION AFTER SET: Array
+(
+    [id] => 5
+    [name] => Loyol Michael Vipin
+    [email] => xlmvipin@gmail.com
+    [role] => student
+)
+
+[2025-12-03T12:51:22+01:00] Redirecting to role dashboard: student/dashboard.php

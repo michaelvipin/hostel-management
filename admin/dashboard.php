@@ -9,20 +9,17 @@ $pendingLeaves = 0;
 $recentStudents = [];
 
 try {
-    // Count Students
     $stmt = $pdo->query("SELECT COUNT(*) FROM users WHERE role = 'student'");
     $totalStudents = $stmt->fetchColumn();
 
-    // Count Pending Leaves
     $stmt = $pdo->query("SELECT COUNT(*) FROM leaves WHERE status = 'pending'");
     $pendingLeaves = $stmt->fetchColumn();
 
-    // Fetch 5 Newest Students for the "Recent Activity" table
     $stmt = $pdo->query("SELECT name, email, created_at FROM users WHERE role = 'student' ORDER BY created_at DESC LIMIT 5");
     $recentStudents = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 } catch (PDOException $e) {
-    // Fail silently for UI demo if tables aren't perfect yet
+    // Fail silently
 }
 
 $pageTitle = "Admin Dashboard";
@@ -37,11 +34,13 @@ $pageTitle = "Admin Dashboard";
 </head>
 <body class="h-full">
 
-<?php include __DIR__ . '/../includes/ui/header.php'; ?>
 <?php include __DIR__ . '/../includes/ui/sidebar.php'; ?>
 
-<div class="md:ml-64 transition-all duration-300">
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="md:ml-64 flex flex-col min-h-screen transition-all duration-300">
+    
+    <?php include __DIR__ . '/../includes/ui/header.php'; ?>
+
+    <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
         
         <div class="mb-8">
             <h1 class="text-2xl font-bold text-gray-900">Admin Overview</h1>
@@ -153,4 +152,3 @@ $pageTitle = "Admin Dashboard";
 
 </body>
 </html>
-```

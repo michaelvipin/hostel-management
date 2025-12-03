@@ -10,8 +10,7 @@ try {
     $counts = [];
 }
 
-// 2. Fetch Recent Leaves with Joins
-// Note: Adjusted query slightly to be robust if table is empty
+// 2. Fetch Recent Leaves
 $recent = [];
 try {
     $recent = $pdo->query("
@@ -23,9 +22,6 @@ try {
         LIMIT 100
     ")->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
-    // If column names differ in your actual DB (e.g. student_id vs user_id), 
-    // please adjust the JOIN condition above. 
-    // I used 'user_id' based on standard conventions, but if your DB has 'student_id', swap it back.
     $recent = [];
 }
 
@@ -41,11 +37,13 @@ $pageTitle = "Leaves Dashboard";
 </head>
 <body class="h-full">
 
-<?php include __DIR__ . '/../includes/ui/header.php'; ?>
 <?php include __DIR__ . '/../includes/ui/sidebar.php'; ?>
 
-<div class="md:ml-64 transition-all duration-300">
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="md:ml-64 flex flex-col min-h-screen transition-all duration-300">
+    
+    <?php include __DIR__ . '/../includes/ui/header.php'; ?>
+
+    <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
         
         <div class="sm:flex sm:items-center sm:justify-between mb-8">
             <div>
@@ -57,7 +55,6 @@ $pageTitle = "Leaves Dashboard";
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            
             <div class="bg-white overflow-hidden rounded-xl shadow-sm border border-gray-100 p-6 flex items-center justify-between">
                 <div>
                     <p class="text-sm font-medium text-gray-500 truncate">Pending Requests</p>
@@ -116,7 +113,6 @@ $pageTitle = "Leaves Dashboard";
                         <?php if (count($recent) > 0): ?>
                             <?php foreach ($recent as $r): ?>
                                 <?php 
-                                    // Status Logic
                                     $st = strtolower($r['status']);
                                     $badgeClass = match($st) {
                                         'approved' => 'bg-green-100 text-green-800',
@@ -168,7 +164,7 @@ $pageTitle = "Leaves Dashboard";
                         <?php else: ?>
                             <tr>
                                 <td colspan="6" class="px-6 py-10 text-center text-sm text-gray-500">
-                                    No leave records found in the database.
+                                    No leave records found.
                                 </td>
                             </tr>
                         <?php endif; ?>
